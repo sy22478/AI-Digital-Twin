@@ -11,7 +11,23 @@ Captured: 16 July 2026. This is the single source of truth for the site and the 
 - **Location:** Austin, Texas, United States
 - **Status:** Open to work — Austin, TX and remote. Open to on-site, hybrid, and remote.
 - **Network:** 500+ connections, 1,382 followers
-- **Links:** GitHub (linked from profile), LinkedIn as above
+- **Links:** LinkedIn as above. GitHub: https://github.com/sy22478 (verified 16 July 2026 —
+  the `sonuyadav-sepa` account is unrelated to this work and must not be linked from the site.)
+
+## About
+
+Supplied by Sonu on 16 July 2026 to fill the narrative gap flagged under "Notes and gaps".
+This is the only content here not captured from the public profile.
+
+> I studied neuroscience because I wanted to understand how the brain produces intelligence,
+> with the goal of building AI that works the way a human brain does. Moving into AI/ML is a
+> continuation of that goal rather than a change of direction: the lab is where I learned how
+> intelligence is organised, and engineering is where I try to build it.
+
+**Deliberately out of scope.** The circumstances of the Natera departure and Sonu's visa status
+are excluded from this file by his decision. They are not on the site and not in the twin's
+system prompt. If a visitor asks the twin why he left Natera, it has no such detail and should
+decline and point to LinkedIn — that is correct behaviour, not a gap to fix.
 
 ## Experience
 
@@ -103,6 +119,18 @@ Molecular and classical genetics, cell structure and function, organismal biolog
 methods for biological sciences, bioinformatics and computational genomics.
 
 ## Projects
+
+Repository links verified against github.com/sy22478 on 16 July 2026. All are public.
+
+| Project | Repository |
+|---|---|
+| HealthMate | https://github.com/sy22478/HealthMate |
+| Resume Tailor | https://github.com/sy22478/resume-tailoring-ai-agent |
+| ReneWind | https://github.com/sy22478/ReneWind |
+| Personal Loan Campaign | https://github.com/sy22478/Personal_Loan_Campaign |
+| EasyVisa | https://github.com/sy22478/EasyVisa |
+| FoodHub | https://github.com/sy22478/Food-delivery-analysis |
+| Restaurant Turnover Prediction | https://github.com/sy22478/Restaurant-Turnover-Prediction |
 
 ### HealthMate: Agentic Healthcare Assistant
 - Designed and deployed an agentic AI health assistant using OpenAI's Agent SDK and LangChain,
@@ -237,11 +265,10 @@ Fellow. January 5, 2025. Worked with Sonu on the same team at Natera.
 
 Flagged honestly so the site does not paper over them:
 
-- **There is no About section on the profile.** This is the usual place a personal voice lives.
-  The twin will have facts but no narrative unless one is supplied.
-- **The career arc is a deliberate transition:** biology and neuroscience research → clinical lab
-  operations → AI/ML. Recruiters will ask why. The profile does not answer this anywhere. This is
-  the single highest-value thing to add.
+- ~~**There is no About section on the profile.**~~ Resolved 16 July 2026 — see "About" above.
+- ~~**The career arc is a deliberate transition.**~~ Resolved 16 July 2026. The arc is not a
+  transition away from neuroscience but a continuation of it: he studied the brain in order to
+  build intelligence. See "About".
 - **The most recent role is a contract AI training assignment**, while the strongest evidence of
   engineering ability sits in the projects (HealthMate, Resume Tailor). The site should lead with
   projects, not with job titles.
