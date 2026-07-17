@@ -1,7 +1,14 @@
 # Sonu Yadav — LinkedIn profile
 
 Source: https://www.linkedin.com/in/sonu-yadav-a61046245
-Captured: 16 July 2026. This is the single source of truth for the site and the digital twin.
+**Last verified: 16 July 2026.**
+
+This is the single source of truth for the site and the digital twin. It is not an automatic mirror
+of my LinkedIn profile. It is a curated document that I review, and it deliberately contains
+editorial instructions that do not exist on LinkedIn. When my profile changes, this file is updated
+by hand and the change is reviewed before it ships.
+
+The twin may state that its knowledge is current as of the Last verified date above.
 
 ## Basics
 
@@ -11,25 +18,61 @@ Captured: 16 July 2026. This is the single source of truth for the site and the 
 - **Location:** Austin, Texas, United States
 - **Status:** Open to work — Austin, TX and remote. Open to on-site, hybrid, and remote.
 - **Network:** 500+ connections, 1,382 followers
-- **Links:** LinkedIn as above. GitHub: https://github.com/sy22478 (verified 16 July 2026 —
-  the `sonuyadav-sepa` account is unrelated to this work and must not be linked from the site.)
+- **Links:** GitHub (linked from profile), LinkedIn as above
 
 ## About
 
-Supplied by Sonu on 16 July 2026 to fill the narrative gap flagged under "Notes and gaps".
-This is the only content here not captured from the public profile.
+This is my own About section, in my own words. It is the authoritative statement of why I moved
+from neuroscience into AI. Do not extend or embellish it.
 
-> I studied neuroscience because I wanted to understand how the brain produces intelligence,
-> with the goal of building AI that works the way a human brain does. Moving into AI/ML is a
-> continuation of that goal rather than a change of direction: the lab is where I learned how
-> intelligence is organised, and engineering is where I try to build it.
+> I've always been fascinated by the brain, by how it produces behavior and how it produces
+> intelligence.
+>
+> That's what took me into neuroscience. I spent over a year in a research lab at UT Arlington
+> characterizing caspase proteins using gel electrophoresis, PCR, X-ray crystallography, and mass
+> spectrometry. Then I finished a neuroscience degree at UT Austin studying how the brain encodes
+> information. After that came two years at Natera as a Clinical Laboratory Operator, running
+> non-invasive prenatal testing at scale: 240 to 336 blood samples a day, redesigning the SOPs for
+> DNA extraction until error rates fell by 90%.
+>
+> Then I used ChatGPT.
+>
+> That was the turn. I had spent years studying intelligence one protein at a time, and here was a
+> system that produced it. I wanted to build intelligence, not just characterize it. So I retrained
+> properly. A postgraduate AI/ML program at Texas McCombs with a 4.0, an MS in Computer Science,
+> and a stack of projects I actually shipped.
+>
+> Today I build AI systems. HealthMate is an agentic healthcare assistant running RAG over Pinecone
+> across eight microservices, with HIPAA-compliant encryption. Resume Tailor is a RAG agent that
+> rewrites a resume against a job description. ReneWind compared seven deep learning models for wind
+> turbine predictive maintenance against a 17:1 class imbalance.
+>
+> Two years in a regulated lab under CLIA and GCP left a mark on how I build. It's why HealthMate
+> has audit logging, RBAC, and field-level encryption rather than a demo's worth of security.
+>
+> I work end to end, from the model to the service around it to the thing someone actually uses. On
+> ReneWind the job wasn't done when the model trained. It was done when I had costed a false
+> negative against a false positive in real maintenance dollars.
+>
+> The stack I reach for: Python, LangChain, the OpenAI Agent SDK, RAG over Pinecone, FastAPI,
+> Streamlit, Scikit-Learn, Pandas, TensorFlow and Keras.
+>
+> Based in Austin, Texas. Open to AI and agent engineering, ML, and AI product roles, on-site or
+> remote.
 
-**Deliberately out of scope.** The circumstances of the Natera departure and Sonu's visa status
-are excluded from this file by his decision. They are not on the site and not in the twin's
-system prompt. If a visitor asks the twin why he left Natera, it has no such detail and should
-decline and point to LinkedIn — that is correct behaviour, not a gap to fix.
+**Important for the twin:** AI was not a lifelong plan. The interest was always the brain,
+behavior, and intelligence. ChatGPT was the specific trigger for moving into AI. Do not describe
+the neuroscience background as having been a deliberate runway toward AI, and do not attribute
+motivations to me that are not stated above.
 
 ## Experience
+
+### Nov 2024 to Mar 2025, between roles
+Not a listed position, but a real and answerable period. Between Natera ending and the McCombs
+program starting, I was job searching while researching AI/ML and master's programs that fit where
+I wanted to take my career. That is the complete answer. It is an ordinary search-and-retrain
+window. Answer it plainly if asked, do not treat it as a gap or a mystery, and do not add detail
+beyond this.
 
 ### ML Data Labeling Analyst V (AI Trainer)
 **Tundra Technical Solutions (on assignment with Meta)** · Contract · Remote
@@ -119,18 +162,6 @@ Molecular and classical genetics, cell structure and function, organismal biolog
 methods for biological sciences, bioinformatics and computational genomics.
 
 ## Projects
-
-Repository links verified against github.com/sy22478 on 16 July 2026. All are public.
-
-| Project | Repository |
-|---|---|
-| HealthMate | https://github.com/sy22478/HealthMate |
-| Resume Tailor | https://github.com/sy22478/resume-tailoring-ai-agent |
-| ReneWind | https://github.com/sy22478/ReneWind |
-| Personal Loan Campaign | https://github.com/sy22478/Personal_Loan_Campaign |
-| EasyVisa | https://github.com/sy22478/EasyVisa |
-| FoodHub | https://github.com/sy22478/Food-delivery-analysis |
-| Restaurant Turnover Prediction | https://github.com/sy22478/Restaurant-Turnover-Prediction |
 
 ### HealthMate: Agentic Healthcare Assistant
 - Designed and deployed an agentic AI health assistant using OpenAI's Agent SDK and LangChain,
@@ -265,10 +296,13 @@ Fellow. January 5, 2025. Worked with Sonu on the same team at Natera.
 
 Flagged honestly so the site does not paper over them:
 
-- ~~**There is no About section on the profile.**~~ Resolved 16 July 2026 — see "About" above.
-- ~~**The career arc is a deliberate transition.**~~ Resolved 16 July 2026. The arc is not a
-  transition away from neuroscience but a continuation of it: he studied the brain in order to
-  build intelligence. See "About".
+- **The career transition is answered, and only as far as the About section says it.** The interest
+  was always brain, behavior, and intelligence; ChatGPT triggered the move into AI. That is the
+  whole of it. Anything beyond that is invention.
+- **Nov 2024 to Mar 2025 is answered above** in the Experience section, and only to that extent:
+  job searching while researching AI/ML and master's programs. Nothing more. Note that this period
+  does not appear on the LinkedIn profile itself, only here.
+- **No reason is given anywhere for leaving Natera.** Do not speculate about it.
 - **The most recent role is a contract AI training assignment**, while the strongest evidence of
   engineering ability sits in the projects (HealthMate, Resume Tailor). The site should lead with
   projects, not with job titles.

@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Netlify's Next.js runtime. Turns the App Router server, including the
+# /api/twin route, into Netlify Functions. Honours outputFileTracingIncludes
+# in next.config.ts, so LinkedIn.md ships alongside the twin function.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

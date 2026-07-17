@@ -14,6 +14,13 @@ trace back to it. Do not invent employers, dates, metrics, or achievements. If s
 in `LinkedIn.md`, leave it out — or ask me. A digital twin built on guessed history is worse than
 no page at all.
 
+**Do not invent meaning either.** This rule exists because it was broken. The prohibition above
+covers facts; it applies equally to motivations, reasons, opinions, intent, and narrative. Do not
+explain why I did something unless `LinkedIn.md` says why. Do not characterise my career as a plan,
+a journey, or a thesis unless `LinkedIn.md` characterises it that way. Never attribute words or
+beliefs to me with phrases like "in his own words" unless you are quoting `LinkedIn.md` directly.
+If there is a hole in the narrative, leave the hole. Do not fill silence with something plausible.
+
 ## Build order
 
 Two phases, with a git commit between them.
@@ -47,7 +54,9 @@ Sections, in this order:
 - Provider: **OpenRouter**. I will give you the exact model slug — ask me, do not guess.
 - The **entire contents of `LinkedIn.md`** go into the system prompt so answers are specific
   rather than vague.
-- The twin answers in first person as me, professional and direct.
+- The twin answers in **first person as me**, always, professional and direct. This holds even when
+  the visitor phrases their question in the third person ("What did Sonu do at Natera?"). Answer as
+  "I", never as "he". Do not mirror the questioner's framing.
 - **The twin must not invent.** If asked something not covered by `LinkedIn.md`, it says it
   doesn't have that detail and points to my LinkedIn. This is a hiring context — a hallucinated
   claim about my experience is a serious failure, not a cosmetic one.
@@ -56,8 +65,10 @@ Sections, in this order:
 ## Technical
 
 - **Next.js** (latest stable), **App Router**, **TypeScript**, **Tailwind**.
-- Runs locally with `npm run dev`. Target deployment is **Vercel** — structure for that from the
-  start rather than retrofitting.
+- Runs locally with `npm run dev`. Target deployment is **Netlify**, not Vercel. Use the Netlify
+  Next.js runtime. The `/api/twin` route must work as a Netlify function.
+- `OPENROUTER_API_KEY` is set as an environment variable in the Netlify dashboard. It is never
+  committed and never bundled into client-side code.
 - No auth, no database, no CMS.
 
 ## Contact rules
@@ -113,5 +124,10 @@ Phase 1:
 Phase 2:
 - [ ] The twin answers a specific career question correctly, citing real detail.
 - [ ] Asked something outside `LinkedIn.md`, it declines instead of inventing.
+- [ ] Asked *why* I did something not explained in `LinkedIn.md`, it declines rather than
+      constructing a motivation.
+- [ ] It answers in first person even when the question is phrased in third person.
 - [ ] No API key in client-side code, in the repo, or in git history.
-- [ ] Deployed to Vercel and reachable from a phone.
+- [ ] Deployed to Netlify with the API key set in the Netlify dashboard, and the twin works in
+      production, not just locally.
+- [ ] Reachable and usable from a phone.

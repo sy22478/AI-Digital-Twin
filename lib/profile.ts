@@ -5,7 +5,7 @@ export const profile = {
   role: "AI/ML Engineer",
   location: "Austin, Texas",
   headline: "I studied the brain to understand intelligence. Now I build it.",
-  subline: "Neuroscience wasn't a detour on the way to AI — it was the reason.",
+  subline: "For years I studied intelligence one protein at a time. Then I used ChatGPT, and that was the turn.",
   status: "Open to work. Austin, TX and remote.",
   linkedin: "https://www.linkedin.com/in/sonu-yadav-a61046245",
   github: "https://github.com/sy22478",
