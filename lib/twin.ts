@@ -4,7 +4,7 @@ import { join } from "node:path";
 // Server-only. Never import this from a client component: it reads the filesystem
 // and is the module that sits next to the API key.
 
-export const MODEL = "anthropic/claude-sonnet-5";
+export const MODEL = "z-ai/glm-5.2";
 
 // The whole profile goes in the prompt so answers cite real detail rather than
 // paraphrasing vaguely. next.config.ts traces this file into the Netlify bundle.
