@@ -8,6 +8,16 @@ import { getStore } from "@netlify/blobs";
 // count how many fall in the last hour and the last day. The stored array is
 // naturally bounded to MAX_PER_DAY entries, since we stop appending once the day
 // limit is reached and entries older than a day are pruned on read.
+//
+// Known limitations, accepted deliberately:
+// 1. The get / push / setJSON sequence is not atomic. Strong consistency guarantees
+//    a fresh read, not a serialized read-modify-write, so concurrent requests from
+//    one IP can each read the same count and each write count+1, losing entries. An
+//    etag compare-and-swap would close it; we do not, because the blast radius is a
+//    single burst and the funded OpenRouter balance is the real cap.
+// 2. Keying on the full IP makes this per-device, not per-person. An IPv6 client gets
+//    a /64, so a new address within that block draws a fresh quota. Limiting on the
+//    /64 prefix would fix it; not done.
 
 const HOUR_MS = 60 * 60 * 1000;
 const DAY_MS = 24 * HOUR_MS;
