@@ -1,29 +1,11 @@
 import { MODEL, systemPrompt } from "@/lib/twin";
+import { allowRequest } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const WINDOW_MS = 60_000;
-const MAX_PER_WINDOW = 12;
 const MAX_CHARS = 1000;
 const MAX_TURNS = 20;
-
-// Best-effort, per-instance. Bounds casual hammering; the real backstop is the
-// spend limit on the OpenRouter key.
-const hits = new Map<string, { count: number; reset: number }>();
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  if (hits.size > 5000) hits.clear();
-
-  const seen = hits.get(ip);
-  if (!seen || now > seen.reset) {
-    hits.set(ip, { count: 1, reset: now + WINDOW_MS });
-    return false;
-  }
-  seen.count += 1;
-  return seen.count > MAX_PER_WINDOW;
-}
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -47,11 +29,6 @@ export async function POST(req: Request) {
     return Response.json({ error: "The twin is not configured." }, { status: 503 });
   }
 
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
-  if (rateLimited(ip)) {
-    return Response.json({ error: "Too many messages. Give it a minute." }, { status: 429 });
-  }
-
   let body: unknown;
   try {
     body = await req.json();
@@ -62,6 +39,19 @@ export async function POST(req: Request) {
   const messages = parseMessages((body as { messages?: unknown })?.messages);
   if (!messages) {
     return Response.json({ error: "Bad request." }, { status: 400 });
+  }
+
+  // Netlify sets x-nf-client-connection-ip to the real client IP. Count only
+  // validated requests, so malformed calls do not consume anyone's quota.
+  const ip =
+    req.headers.get("x-nf-client-connection-ip") ??
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    "local";
+  if (!(await allowRequest(ip))) {
+    return Response.json(
+      { error: "You have reached the question limit. Reach me on LinkedIn." },
+      { status: 429 },
+    );
   }
 
   const upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
