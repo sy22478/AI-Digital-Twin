@@ -23,9 +23,17 @@ function keyFor(ip: string): string {
 // allowed. Fails open: if Blobs is unreachable the request is allowed, since the
 // OpenRouter spend cap is the real backstop and a storage blip must not take the
 // twin down.
+const STORE_NAME = "twin-rate-limit";
+
 export async function allowRequest(ip: string): Promise<boolean> {
   try {
-    const store = getStore("twin-rate-limit");
+    // Strong consistency is required: a rate limiter reads a count, increments it,
+    // and writes it back. Under the default eventual consistency, reads are served
+    // from cache and lag writes, so sequential requests each read a stale array and
+    // append to it, clobbering entries written in between. The count never climbs to
+    // the limit and nothing is ever refused. Strong consistency makes every read
+    // reflect the latest write.
+    const store = getStore({ name: STORE_NAME, consistency: "strong" });
     const key = keyFor(ip);
     const now = Date.now();
 
@@ -39,8 +47,19 @@ export async function allowRequest(ip: string): Promise<boolean> {
 
     recent.push(now);
     await store.setJSON(key, recent);
+    // Temporary diagnostic: prove the read-modify-write actually persisted.
+    // countRead is what Blobs returned for this key; countWritten is what we
+    // just wrote back. If countRead stays 0 across requests, the write is not
+    // persisting even though Blobs did not throw.
+    console.log(
+      `[rate-limit] store=${STORE_NAME} key=${key} countRead=${previous?.length ?? 0} countWritten=${recent.length}`,
+    );
     return true;
-  } catch {
+  } catch (err) {
+    const e = err as Error;
+    console.error(
+      `[rate-limit] Blobs threw, failing open. store=${STORE_NAME} name=${e?.name} message=${e?.message}`,
+    );
     return true;
   }
 }
