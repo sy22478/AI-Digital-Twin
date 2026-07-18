@@ -1,5 +1,4 @@
 import { MODEL } from "@/lib/twin";
-import { allowRequest } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,22 +7,17 @@ export const dynamic = "force-dynamic";
 // the same MODEL and call shape as /api/twin, so a daily GET tells us the twin works
 // end to end rather than checking a proxy for it (a balance lookup, a stubbed call).
 // Deliberately cheap: a two-token prompt, one token out, and no system prompt.
-export async function GET(req: Request) {
+export async function GET() {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
     return Response.json({ ok: false, reason: "OPENROUTER_API_KEY is not set" }, { status: 503 });
   }
 
-  // Reuse the twin's per-IP quota so this endpoint cannot be turned into a way to
-  // burn OpenRouter credit.
-  const ip =
-    req.headers.get("x-nf-client-connection-ip") ??
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    "local";
-  if (!(await allowRequest(ip))) {
-    return Response.json({ ok: false, reason: "rate limited" }, { status: 503 });
-  }
-
+  // No rate limit here, deliberately. A monitor must never return a false failure:
+  // a rate-limited check would report ok:false while the twin is actually fine, the
+  // cry-wolf result that trains a person to ignore the monitor. The abuse it would
+  // guard against is negligible, since max_tokens is 1 and each call costs a rounding
+  // error; the twin route keeps its own per-IP limit.
   let upstream: Response;
   try {
     upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
