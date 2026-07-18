@@ -47,15 +47,12 @@ export async function allowRequest(ip: string): Promise<boolean> {
 
     recent.push(now);
     await store.setJSON(key, recent);
-    // Temporary diagnostic: prove the read-modify-write actually persisted.
-    // countRead is what Blobs returned for this key; countWritten is what we
-    // just wrote back. If countRead stays 0 across requests, the write is not
-    // persisting even though Blobs did not throw.
-    console.log(
-      `[rate-limit] store=${STORE_NAME} key=${key} countRead=${previous?.length ?? 0} countWritten=${recent.length}`,
-    );
     return true;
   } catch (err) {
+    // Failing open is deliberate: a Blobs outage must not take the twin down,
+    // and the OpenRouter spend cap is the real backstop. But log it, because a
+    // limiter that fails open silently is indistinguishable from one that does
+    // not work at all: that is how two broken versions of this shipped.
     const e = err as Error;
     console.error(
       `[rate-limit] Blobs threw, failing open. store=${STORE_NAME} name=${e?.name} message=${e?.message}`,
