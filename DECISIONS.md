@@ -42,6 +42,34 @@ wouldn't have loaded, since Claude Code reads it from the project root. Caught i
 answering its question. Fix: exit, `cd` into the repo, relaunch. Lesson: check the working
 directory in the Claude Code header before you give it any real work.
 
+## 2026-07-17
+
+**BUG — The Blobs rate limiter counted almost nothing.**
+Root cause: `getStore` defaults to eventual consistency, so reads come from cache and lag
+writes. Every request read a stale array and appended to it, discarding what landed in
+between. Ten strictly sequential requests three seconds apart produced five stored entries.
+Fix: `consistency: "strong"`. Verified by watching countRead climb 13, 14, 15 and then
+return a 429 in 48ms.
+
+**SURPRISE — An empty log looks exactly like a clean one.**
+I found the bug by watching the blob store grow from 113 to 183 bytes in the Netlify
+dashboard, not from logs. The instrumentation I added to diagnose it was never pushed, so I
+was reading a function built before the change. No log lines read as "nothing wrong" when it
+actually meant "my code isn't running."
+
+**SURPRISE — The test I nearly ran first would have passed for the wrong reason.**
+It was a sequential loop that returns a 429 at request 16. It would have passed because my
+quota was already spent, not because the limiter worked. Running the tests in the other order
+is the only reason the failure surfaced. Same shape as the limiter it was testing: a check
+that passes for reasons unrelated to what it claims to prove.
+
+**SURPRISE — The backstop I kept citing could never fire.**
+Every version of this rested on one sentence: the OpenRouter spend cap is the real backstop.
+It was in the code comment, in the PR, and in my reasoning when I accepted a known race as
+tolerable. But the account had nineteen cents of trial credit and no card. A spend cap limits
+what you can spend, it does not fund anything. The endpoint was open since launch and the only
+thing protecting it was that nobody had found the site.
+
 ---
 
 ## Entry template
