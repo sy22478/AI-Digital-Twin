@@ -1,0 +1,25 @@
+name: Twin health check
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check /api/health
+        run: |
+          url="https://sonu-yadav.netlify.app/api/health?t=$(date +%s)"
+          for attempt in 1 2 3; do
+            body=$(curl -s --max-time 30 "$url" || true)
+            echo "Attempt $attempt: $body"
+            if echo "$body" | grep -q '"ok":true'; then
+              echo "Twin is healthy."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Twin health check FAILED after 3 attempts. Last response: $body"
+          exit 1
