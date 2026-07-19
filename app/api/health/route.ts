@@ -7,10 +7,14 @@ export const dynamic = "force-dynamic";
 // the same MODEL and call shape as /api/twin, so a daily GET tells us the twin works
 // end to end rather than checking a proxy for it (a balance lookup, a stubbed call).
 // Deliberately cheap: a two-token prompt, one token out, and no system prompt.
+//
+// Status is always 200, health lives in the JSON body: the monitor's fetch transport
+// surfaces 2xx bodies but blanks non-2xx ones, so the reason must ride on a 200 to stay
+// readable.
 export async function GET() {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    return Response.json({ ok: false, reason: "OPENROUTER_API_KEY is not set" }, { status: 503 });
+    return Response.json({ ok: false, reason: "OPENROUTER_API_KEY is not set" }, { status: 200 });
   }
 
   // No rate limit here, deliberately. A monitor must never return a false failure:
@@ -35,7 +39,7 @@ export async function GET() {
     });
   } catch (err) {
     const e = err as Error;
-    return Response.json({ ok: false, reason: `request failed: ${e?.message}` }, { status: 503 });
+    return Response.json({ ok: false, reason: `request failed: ${e?.message}` }, { status: 200 });
   }
 
   if (!upstream.ok) {
@@ -43,7 +47,7 @@ export async function GET() {
     // account detail the upstream body might carry.
     return Response.json(
       { ok: false, reason: `openrouter responded ${upstream.status}` },
-      { status: 503 },
+      { status: 200 },
     );
   }
 
@@ -58,7 +62,7 @@ export async function GET() {
   if (!Array.isArray(data?.choices)) {
     return Response.json(
       { ok: false, reason: "malformed response from openrouter" },
-      { status: 503 },
+      { status: 200 },
     );
   }
 
