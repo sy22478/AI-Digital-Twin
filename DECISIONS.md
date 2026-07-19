@@ -72,6 +72,17 @@ thing protecting it was that nobody had found the site.
 
 ---
 
+## 2026-07-18
+
+**BUG — The health check's first failures were not failures.**
+`web_fetch` cached the empty body from the endpoint's initial false 503 and served that stale
+empty for an hour, including after the endpoint was fixed and returning 200 `{"ok":true}`. Root
+cause: a cached read, not a sick endpoint. Fix: a fresh query param per request reads it live,
+and the monitor now appends a timestamp every run, because without it a cached healthy read
+would let a real outage pass silently, a false all-clear, the worst failure a monitor has.
+
+---
+
 ## Entry template
 
 Copy this, don't overthink it:
