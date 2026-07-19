@@ -30,7 +30,7 @@ export async function GET() {
       body: JSON.stringify({
         model: MODEL,
         messages: [{ role: "user", content: "ping" }],
-        max_tokens: 1,
+        max_tokens: 16,
       }),
     });
   } catch (err) {
@@ -47,15 +47,17 @@ export async function GET() {
     );
   }
 
-  // A 200 with no usable completion is still a failure: the model returned nothing,
-  // so the twin would too.
-  const data = (await upstream.json().catch(() => null)) as
-    | { choices?: { message?: { content?: unknown } }[] }
-    | null;
-  const content = data?.choices?.[0]?.message?.content;
-  if (typeof content !== "string") {
+  // The failures this monitor exists to catch (dead balance/402, revoked key/401,
+  // deprecated model/404) all arrive above as a non-2xx status. A well-formed 200 is
+  // healthy. We do not require message content: MODEL is a reasoning model, so a tiny
+  // probe can legitimately spend its tokens on reasoning and return null content while
+  // the twin at its real max_tokens works fine. Requiring content there is what
+  // produced false 503s. We only confirm the response is a well-formed completion: it
+  // parses as JSON and carries a choices array.
+  const data = (await upstream.json().catch(() => null)) as { choices?: unknown } | null;
+  if (!Array.isArray(data?.choices)) {
     return Response.json(
-      { ok: false, reason: "openrouter returned no completion" },
+      { ok: false, reason: "malformed response from openrouter" },
       { status: 503 },
     );
   }
