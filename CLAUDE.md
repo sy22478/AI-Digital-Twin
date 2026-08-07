@@ -1,5 +1,7 @@
 # AI Digital Twin — Sonu Yadav
 
+Read F:\claude-docs\KB\00_BOOT.md at session start: shared facts, session registry, repo state.
+
 ## What this is
 
 A personal portfolio site with an AI "digital twin": a chat interface where a visitor can

@@ -1,0 +1,79 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(.env)",
+      "Edit(.env)",
+      "Read(.env.local)",
+      "Edit(.env.local)",
+      "Read(.env.*.local)",
+      "Edit(.env.*.local)",
+      "Read(.env.development)",
+      "Edit(.env.development)",
+      "Read(.env.test)",
+      "Edit(.env.test)",
+      "Read(.env.staging)",
+      "Edit(.env.staging)",
+      "Read(.env.production)",
+      "Edit(.env.production)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push * --force*)",
+      "Bash(git push * -f*)",
+      "Bash(git push * +*)",
+      "Bash(git reset --hard*)",
+      "Bash(git filter-repo*)",
+      "Bash(docker compose* down -v*)",
+      "Bash(docker compose* down --volume*)",
+      "Bash(docker-compose* down -v*)",
+      "Bash(docker-compose* down --volume*)",
+      "PowerShell(git push --force*)",
+      "PowerShell(git push -f*)",
+      "PowerShell(git push * --force*)",
+      "PowerShell(git push * -f*)",
+      "PowerShell(git push * +*)",
+      "PowerShell(git reset --hard*)",
+      "PowerShell(git filter-repo*)",
+      "PowerShell(docker compose* down -v*)",
+      "PowerShell(docker compose* down --volume*)",
+      "PowerShell(docker-compose* down -v*)",
+      "PowerShell(docker-compose* down --volume*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "case \"$OS\" in Windows_NT) PY=python;; *) PY=python3;; esac; exec \"$PY\" \"${CLAUDE_PROJECT_DIR}/.claude/hooks/session_start.py\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "case \"$OS\" in Windows_NT) PY=python;; *) PY=python3;; esac; exec \"$PY\" \"${CLAUDE_PROJECT_DIR}/.claude/hooks/protect_paths.py\""
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "manual|auto",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "case \"$OS\" in Windows_NT) PY=python;; *) PY=python3;; esac; exec \"$PY\" \"${CLAUDE_PROJECT_DIR}/.claude/hooks/precompact_archive.py\""
+          }
+        ]
+      }
+    ]
+  }
+}

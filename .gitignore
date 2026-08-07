@@ -9,3 +9,10 @@ build/
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
+
+# Claude Code. .claude/ holds project config (hooks, skills, commands, committed settings) and is
+# tracked. Two exceptions: settings.local.json is per-machine, and transcripts are plaintext of
+# everything a tool printed, which can include anything a command echoed.
+.claude/settings.local.json
+.claude/transcripts/
+__pycache__/

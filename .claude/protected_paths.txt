@@ -1,0 +1,13 @@
+# Files whose quiet weakening would be this repository's silent failure.
+# One repo-relative path or glob per line. Blank lines and # comments are ignored.
+# A missing file here protects nothing. A listed path that does not exist yet is inert
+# until it does, so listing a test before it is written is deliberate, not a mistake.
+#
+# Protected through the file tools and through the shell. Read-only shell commands
+# still work: pytest, cat, grep, git add/diff/log/show/status.
+
+# This repo has no test suite, and its silent failure is not auth, it is invention. CLAUDE.md:
+# every factual claim on the site must trace back to LinkedIn.md, and the twin's system prompt
+# is the whole file. An agent tidying, summarising or filling a gap in LinkedIn.md is exactly
+# how invented career history becomes sourced career history, in a hiring context.
+LinkedIn.md
