@@ -81,6 +81,20 @@ cause: a cached read, not a sick endpoint. Fix: a fresh query param per request 
 and the monitor now appends a timestamp every run, because without it a cached healthy read
 would let a real outage pass silently, a false all-clear, the worst failure a monitor has.
 
+## 2026-08-07
+
+**DECISION. LinkedIn.md is write-protected by a hook, and it is the only protected file here.**
+Every other repo in the scaffold protects a test. This one has no test suite, and its silent
+failure is not auth, it is invention: CLAUDE.md requires every claim on the site to trace back to
+LinkedIn.md, and the twin's system prompt is that whole file. An agent tidying it, or filling a
+gap in it to make the narrative read better, is how invented career history becomes sourced
+career history in front of a recruiter.
+
+**DECISION. The session banner lifts What this is and Contact rules, not a Security section.**
+This repo has no section called Security, so the shared hook now reads the heading names from
+.claude/session_start_sections.md instead of assuming one. Those two sections carry the real
+constraints: do not invent facts or meaning, and keep a raw email out of the page source.
+
 ---
 
 ## Entry template
