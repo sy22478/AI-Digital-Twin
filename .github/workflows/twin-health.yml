@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check /api/health
         run: |
-          url="https://sonu-yadav.netlify.app/api/health?t=$(date +%s)"
+          url="https://sonu-yadav-twin.netlify.app/api/health?t=$(date +%s)"
           for attempt in 1 2 3; do
             body=$(curl -s --max-time 30 "$url" || true)
             echo "Attempt $attempt: $body"
