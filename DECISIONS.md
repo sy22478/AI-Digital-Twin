@@ -95,6 +95,13 @@ This repo has no section called Security, so the shared hook now reads the headi
 .claude/session_start_sections.md instead of assuming one. Those two sections carry the real
 constraints: do not invent facts or meaning, and keep a raw email out of the page source.
 
+## 2026-11-11
+
+**DECISION. The twin runs on a free open-weight model, nvidia/nemotron-3.5-super-vl:free.**
+Sonu asked for an open-source model so the project costs nothing. It replaces z-ai/glm-5.2 (paid).
+Free OpenRouter models still need a valid key and are capped at 50 requests a day per account until
+10 credits are bought, which the health check (4 a day) and the per-IP rate limit both share.
+
 ---
 
 ## Entry template
